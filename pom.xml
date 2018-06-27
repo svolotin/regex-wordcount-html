@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fi.sami.service</groupId>
+    <artifactId>wordcounter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>   
+    <packaging>jar</packaging>
+
+    <properties>
+        <version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <resteasy.version>3.0.19.Final</resteasy.version>
+        <surefireArgLine></surefireArgLine>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>bom</artifactId>
+                <version>${version.wildfly.swarm}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+ 
+
+    <build>
+        <finalName>wordcounter</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>wildfly-swarm-plugin</artifactId>
+                <version>${version.wildfly.swarm}</version>
+                <configuration>
+                    <mainClass>fi.sami.service.common.Main</mainClass>
+                    <properties>
+                        <buildVersion>${project.version}</buildVersion>
+                        <!--                        Enable defalt IO threads for maximum concurrent users
+                        <swarm.io.workers.default.io-threads>20</swarm.io.workers.default.io-threads>
+                        <swarm.io.workers.default.task-max-threads>20</swarm.io.workers.default.task-max-threads>-->
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- WildFly Swarm Fractions -->
+        <!-- For dependency injection -->
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>cdi</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>
+        <!-- For Json objects -->
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-jsonp</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>
+        <!--  For PropertiesLoader functionality -->
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>ejb</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>
+
+        <!-- Test dependencies-->
+        <!-- For mocking and invoking private methods -->
+        <!--                http://jmockit.github.io/changes.html
+        jmockit 1.4 has to be before junit in classpath-->
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.40</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>  
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+     
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>3.0.18.Final</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
