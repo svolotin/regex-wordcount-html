@@ -1,0 +1,7 @@
+version: '2'
+services:
+  wordcounter:
+    build: .
+    image: wordcounter
+    ports:
+      - "18080:8080"
