@@ -34,12 +34,10 @@ public class WordCount {
         return this.proportion;
     }
 
-    @JsonIgnore
     public double getFoundWords() {
         return this.foundwords;
     }
 
-    @JsonIgnore
     public double getTotalWords() {
         return this.total;
     }
