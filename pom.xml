@@ -1,26 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fi.sami.service</groupId>
     <artifactId>wordcounter</artifactId>
-    <version>1.0.0-SNAPSHOT</version>   
-    <packaging>jar</packaging>
+    <name>WordCounter</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
-        <version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
+        <version.wildfly.swarm>2018.5.0</version.wildfly.swarm>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <resteasy.version>3.0.19.Final</resteasy.version>
-        <surefireArgLine></surefireArgLine>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom</artifactId>
+                <artifactId>bom-all</artifactId>
                 <version>${version.wildfly.swarm}</version>
                 <scope>import</scope>
                 <type>pom</type>
@@ -28,25 +28,14 @@
         </dependencies>
     </dependencyManagement>
 
- 
-
     <build>
         <finalName>wordcounter</finalName>
-
         <plugins>
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>
-                <configuration>
-                    <mainClass>fi.sami.service.common.Main</mainClass>
-                    <properties>
-                        <buildVersion>${project.version}</buildVersion>
-                        <!--                        Enable defalt IO threads for maximum concurrent users
-                        <swarm.io.workers.default.io-threads>20</swarm.io.workers.default.io-threads>
-                        <swarm.io.workers.default.task-max-threads>20</swarm.io.workers.default.task-max-threads>-->
-                    </properties>
-                </configuration>
+        
                 <executions>
                     <execution>
                         <goals>
@@ -59,26 +48,35 @@
     </build>
 
     <dependencies>
-        <!-- WildFly Swarm Fractions -->
-        <!-- For dependency injection -->
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>cdi</artifactId>
-            <version>${version.wildfly.swarm}</version>
-        </dependency>
-        <!-- For Json objects -->
+        <!-- Java EE 7 dependency -->
+<!--        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>-->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs-jsonp</artifactId>
             <version>${version.wildfly.swarm}</version>
         </dependency>
-        <!--  For PropertiesLoader functionality -->
+        <!-- WildFly Swarm Fractions -->
+<!--        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>-->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
             <version>${version.wildfly.swarm}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>cdi</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>
+    
         <!-- Test dependencies-->
         <!-- For mocking and invoking private methods -->
         <!--                http://jmockit.github.io/changes.html
@@ -96,8 +94,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
-     
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
@@ -105,5 +101,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
